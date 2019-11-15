@@ -47,4 +47,3 @@ class Network:
 
 
 net = Network(NODES)
-print(net.feedforward(1))
