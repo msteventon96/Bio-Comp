@@ -47,4 +47,4 @@ class Network:
 
 
 net = Network(NODES)
-net.feedforward(1)
+print(net.feedforward(1))
