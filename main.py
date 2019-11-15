@@ -3,19 +3,28 @@ import math
 
 ### HYPERPARAMETERS ###
 
+FILE = "1in_cubic.txt"
+
 # Network Params #
 
 NODES = [4, 4]
 
 # PSO Params #
 
+SWARMSIZE = 50
+VELOCITY = 0.5
+PERSONAL_BEST = 1
+INFORM_BEST = 1.5
+GLOBAL_BEST = 1.5
+STEPSIZE = 1
+ITERATIONS = 1000
 
 class Network:
 
     def __init__(self, nodes):
 
         self.nodes = nodes
-
+        self.velocity = np.random.randint(5)
         self.inputWeights = np.random.randn(1, self.nodes[0])
 
         self.w = {}
@@ -45,5 +54,46 @@ class Network:
 
         return self.output
 
+    def mse(self, pred, target):
 
-net = Network(NODES)
+        return (np.square(target - pred)).mean()
+
+
+def train():
+
+    particles = []
+
+    for x in range(0, SWARMSIZE - 1):
+
+        net = Network(NODES)
+        particles.append(net)
+
+    globalBest = None
+    i = 0
+
+    while i < ITERATIONS:
+
+        for x in range(0, len(particles)):
+
+            if globalBest is None or Fitness(x) > Fitness(globalBest):
+
+                globalBest = particles[x]
+
+inputs = []
+outputs = []
+
+file = open(FILE)
+
+for line in file:
+
+    split = line.split(" ")
+
+    inputs.append(split[0])
+
+    for x in range(1, len(split)):
+        if split[x] != "":
+            outputs.append(split[x].rstrip())
+
+
+print(inputs)
+print(outputs)
